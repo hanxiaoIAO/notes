@@ -61,9 +61,9 @@ cp,mv,rm
 
 
 ## nohup &
-nohup :不挂断地运行命令,标准输出和标准错误默认重定向到当前目录下的nohup.out文件中
+nohup :不挂断地运行命令,标准输出和标准错误默认重定向到当前目录下的nohup.out文件中  
 &     :在后台运行
 
-command &      :将任务放到后台,关闭xshell,对应的任务也跟着停止.
-nohup command  :将sh test.sh任务放到后台,关闭标准输入,终端不再能够接收任何输入(标准输入),重定向标准输出和标准错误,即使关闭xshell退出当前session依然继续运行.
+command &      :将任务放到后台,关闭xshell,对应的任务也跟着停止.  
+nohup command  :将sh test.sh任务放到后台,关闭标准输入,终端不再能够接收任何输入(标准输入),重定向标准输出和标准错误,即使关闭xshell退出当前session依然继续运行.  
 nohup command &: test.sh任务放到后台,但是依然可以使用标准输入,终端能够接收任何输入,重定向标准输出和标准错误,即使关闭xshell退出当前session依然继续运行。

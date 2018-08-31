@@ -19,9 +19,12 @@ put -r
 5.清空整个 Redis 服务器的数据：flushall 
 6.清空当前库中的所有 key：flushdb 
 
-# tomcat 
-sudo apt-get install libapr1-dev
+Redis 启动,采用指定配置文件的启动方式：
+redis-server /home/erp10/redis-2.8.24/redis.conf &
 
+# tomcat 
+配置apr模式
+sudo apt-get install libapr1-dev
 
 ./configure --with-apr=/usr/bin --with-java-home=/home/erp1/jdk1.8.0_linux
 make

@@ -22,7 +22,18 @@ mod_proxy提供代理服务器功能，mod_proxy_balancer提供负载均衡功�
 a2enmod是属于apache2.2-common包下的一个工具，如没有这个命令
 apt-get install apache2.2-common
 
-  ```ProxyRequests Off  
+修改配置 
+sudo vi /etc/apache2/mods-enabled/proxy.conf
+``` ProxyRequests Off  
+<Proxy *>  
+    Order deny,allow  
+    Deny from all  
+    #Allow from .your_domain.com  
+</Proxy> 
+```
+修改配置 
+sudo vi /etc/apache2/sites-available/000-default.conf
+```ProxyRequests Off  
          Proxypass / balancer://proxy/  
          ProxyPassReverse / balancer://proxy/   
     <Proxy balancer://proxy>  
@@ -31,7 +42,7 @@ apt-get install apache2.2-common
             BalancerMember http://1.1.11.127:8091  
             BalancerMember http://1.1.11.127:8092  
     </Proxy> 
-  ```
+```
 # 调试
     SetHandler balancer-manager
     Order Deny,Allow

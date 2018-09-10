@@ -61,3 +61,34 @@ ProxySet lbmethod=byrequests 为实现负载均衡的方式，共有三种类型
 #lbmethod=bybusyness 按照繁忙程度均衡(总是分配给活跃请求数最少的服务器)
 
 apache服务器和tomcat的连接方法其实有三种:JK、http_proxy和ajp_proxy
+
+以下部分不是不是负载均衡必要配置，用于测试过程中用来监控调试负载均衡，正式运行中不要启用。
+3.4 配置server-info
+修改配置 
+sudo vi /etc/apache2/mods-enabled/proxy_balancer.conf
+将节点下的内容修改为
+ 	<Location /server-info>
+		SetHandler server-info
+		Require all granted
+	</Location>
+3.5 配置server-status状态界面,balancer-manager监控页面
+修改配置 
+sudo vi /etc/apache2/mods-enabled/status.conf
+修改或添加以下内容：
+    ProxyPass /server-status ! 
+	<Location /server-status>
+		SetHandler server-status
+		Require all granted
+	</Location>
+修改配置 
+sudo vi /etc/apache2/mods-enabled/proxy_balancer.conf
+修改或添加以下内容：
+#过滤balancer-manager监控页面
+ProxyPass /balancer-manager ! 
+#设置balancer-manager监控页面
+<Location /balancer-manager> 
+SetHandler balancer-manager
+Require all granted
+</Location>
+
+备注：balancer-manager配置必须在启用mod_status的前提下使用。

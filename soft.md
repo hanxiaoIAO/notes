@@ -2,6 +2,7 @@
 SecureCRT是一款支持SSH（SSH1和SSH2）的终端仿真程序，简单地说是Windows下登录UNIX或Linux服务器主机的软件。
 
 SFTP
+sftp -P端口号   grid@IP 
 cd 路径                        更改远程目录到“路径” 
 lcd 路径                       更改本地目录到“路径” 
 ls [选项] [路径]               显示远程目录列表 

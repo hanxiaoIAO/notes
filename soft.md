@@ -12,7 +12,7 @@ get 远程路径                   下载文件
 
 put -r
 
-#redis
+# redis
 1.访问redis根目录    cd  /usr/local/redis-2.8.19
 2.登录redis：redis-cli -h 127.0.0.1 -p 6379
 3.查看所有key值：keys *
@@ -35,6 +35,6 @@ sudo make install
                connectionTimeout="20000"
                 maxThreads="300"
                redirectPort="8443"/>
-	
-	-Xdebug -agentlib:jdwp=transport=dt_socket,address=6000,server=y,suspend=n \
-	-Djava.library.path=/usr/local/apr/lib/ "
+    
+    -Xdebug -agentlib:jdwp=transport=dt_socket,address=6000,server=y,suspend=n \
+    -Djava.library.path=/usr/local/apr/lib/ "

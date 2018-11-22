@@ -192,11 +192,11 @@
 
 （4）复用性和可操作性。
 
-# 15.集合框架中的泛型中有什么优点？
+## 15.集合框架中的泛型中有什么优点？
 
 ​	Java1.5引入了泛型，所有的集合接口和实现都大量的使用它。泛型允许我们为集合提供一个可以容纳的对象类型，因此，如果你添加其他类型的任何元素，它会在编译时报错。这避免了在运行时出现ClassCastExcepption,因为你将会在编译时得到报错信息。泛型也使得代码整洁，我们不需要使用显式转换和instanceOf操作符。它也给运行时带来好处，因为不会产生类型检查的字节码指令。
 
-# 16.Java集合框架的基础接口有哪些？
+## 16.Java集合框架的基础接口有哪些？
 
 ​	Collection为集合层级的根接口。一个集合代表一组对象，这些对象即为它的元素。Java平台不提供这个接口任何直接的实现。
 
@@ -208,7 +208,7 @@
 
 ​	其他的接口还有Queue、Dequeue、SortedSet、SortedMap和ListIterator。
 
-# 17.为何Collection不从Cloneable和Serializable接口继承？
+## 17.为何Collection不从Cloneable和Serializable接口继承？
 
 ​	Collection接口指定一组对象，对象即为它的元素。如何维护这些元素有Collection的具体实现决定。例如，一些如List的Collection实现允许重复的元素，而其他的如Set就不允许。很多Collection实现由一个共有的clone方法。然而，把它放到集合的所有实现中也是没有意义的。这是因为Collection是一个抽象表现。重要的事实现。
 
@@ -216,17 +216,17 @@
 
 ​	在所有的实现中授权克隆和序列化，最终导致更少的灵活和更多的限制。特定的实现应该决定如何对它进行克隆或序列化。
 
-# 18.为何Map接口不继承Collection接口？
+## 18.为何Map接口不继承Collection接口？
 
 ​	尽管Map接口和它的实现也是集合框架的一部分，但Map不是集合，集合也不是Map。因此，Map继承Collection毫无意义，反之亦然。
 
 ​	如果Map继承Collection接口，那么元素去哪儿？Map包含Key-Value列表集合的方法，但是它不适合“一组对象”规范。
 
-# 19.什么是迭代器(Iterator)?
+## 19.什么是迭代器(Iterator)?
 
 ​	Iterator接口提供了很多对集合元素进行迭代的方法。每一个集合类都包含了可以返回迭代器实例的迭代方法。迭代器可以在迭代的过程中删除底层集合的元素，但是不可以直接调用集合的remove(Object obj)删除，可以通过迭代器的remove()方法删除。
 
-# 20.Iterator和ListIterator的区别是什么？
+## 20.Iterator和ListIterator的区别是什么？
 
 ​	Iterator可用来遍历Set和List集合，但是ListIterator只能用来遍历List。
 
@@ -234,7 +234,7 @@
 
 ​	ListIterator实现了Iterator接口，并包含其他的功能，比如：增加元素，替换元素，获得前一个和后一个元素的索引等等。
 
-# 21.快速失败(fail-fast)和安全失败(fail-safe)的区别是什么？
+## 21.快速失败(fail-fast)和安全失败(fail-safe)的区别是什么？
 
 ​	快速失败：当你在迭代一个集合的时候，如果有另一个线程正在修改你正在访问的那个集合，就会跑出一个ConcurrentModification异常。
 
@@ -244,21 +244,21 @@
 
 ​	在java.util.concurrent包下的全是安全失败的。
 
-# 22.Java中的HashMap的工作原理是什么？
+## 22.Java中的HashMap的工作原理是什么？
 
 ​	我们知道在java中最长用的两种结构是数组和模拟指针(引用)，几乎所有的数据结构都可以利用这两种组合来实现，HashMap也是如此。实际上HashMap是一个"链表散列"，如下是它数据结构：最左侧是一个数组，数组中的每一个元素都是一个链表，链表的每一个元素都是entry。
 
 ​	HashMap是基于hashing的原理，我们使用put(key,value)存储对象到HashMap中，使用get(key)从HashMap中获取对象。当我们给put()方法传递键和值时，我们先对键调用hashCode()方法，返回的hashCode用于找到bucket位置来存储Entry对象。
 
-# 23.当两个对象的hashcode相同会发生什么？
+## 23.当两个对象的hashcode相同会发生什么？
 
 ​	因为hashcode相同，所以他们的bucket位置相同，‘碰撞’会发生。因为HashMap使用链表存储对象，这个Entry(包含有键值对的Map.Entry对象)会存储在链表中。
 
-# 24.如果两个键的HashCode相同，你如何获取值对象？
+## 24.如果两个键的HashCode相同，你如何获取值对象？
 
 ​	当我们调用get()方法，HashMap会使用键对象的hashcode找到bucket位置，然后调用keys.equals()方法区找到链表中正确的节点，最终找到要找的值对象。
 
-# 25.hashcode()和equals()方法有何重要性？
+## 25.hashcode()和equals()方法有何重要性？
 
 ​	HashMap使用Key对象的hashcode()和equals()方法去决定key-value对的索引。当我们试着从HashMap中获取值得时候，这些方法也会被用到。如果这些方法没有被正确地实现，在这种情况下，两个不同Key也许会产生相同的hashcode()和equals()输出，HashMap将会认为它们是相同的，然后覆盖它们，而非把它们存储到不同的地方。同样的，所有不允许存储重复数据的集合类都使用hashCode()和equals()去查找重复，所以正确实现它们非常重要。equals()和hashCode()的实现应该遵循以下规则：
 
@@ -266,7 +266,7 @@
 
 ​	(2)如果o1.hashCode() == o2.hashCode(),并不意味着o1.equals(o2)会是true。
 
-# 26.HashMap和HashTable有什么区别？
+## 26.HashMap和HashTable有什么区别？
 
 1. HashMap是非线程安全的，HashTable是线程安全的。
 2. HashMap的键和值都允许有null值存在，而HashTable则不行。
@@ -275,11 +275,11 @@
 
 ​	一般不建议用HashTable。HashTable是遗留类，内部实现很多没优化和冗余。即使在多线程环境下，现在也有同步的ConcurrentHashMap替代，没有必要时因为多线程而用HashTable。
 
-# 27.如何决定选用HashMap还是TreeMap?
+## 27.如何决定选用HashMap还是TreeMap?
 
 ​	对于在Map中插入、删除和定位元素这类操作，HashMap是最好的选择。然而，假如你需要对一个有序的Key集合进行遍历，TreeMap是更好的选择。基于你的collection的大小，也许想HashMap中添加元素会更快，将map换为TreeMap进行有序Key的遍历。
 
-# 28.ArrayList和Vector有何异同点
+## 28.ArrayList和Vector有何异同点
 
 ​	ArrayList和Vector在很多时候都很类似。
 
@@ -299,10 +299,126 @@
 
 7. ArrayList更加通用，因为我们可以使用Collections工具类轻易地获取同步列表和只读列表
 
-# 29.Array和ArrayList有何区别？
+## 29.Array和ArrayList有何区别？
 
 ​	Array可以容纳基本类型和对象，而ArrayList只能容纳对象。
 
 ​	Array是指定大小的，而ArrayList大小是固定的。
 
 ​	Array没有提供ArrayList那么多功能，比如addAll、removeAll和Iterator等。尽管ArrayList明显是更好的选择，但也有些时候Array比较好用。
+
+
+
+# 
+
+GOF设计模式
+Java 中Timer和TimerTask 定时器和定时任务使用
+
+2.
+文件
+
+	File file = new File("" + ".xml");
+	FileUtils.writeStringToFile(file, sb.toString(), "UTF-8");
+
+3.
+判断是否为中文
+   static String regEx = "[\u4e00-\u9fa5]";
+   static Pattern pat = Pattern.compile(regEx);
+
+    public static boolean isContainsChinese(String str) {
+    	Matcher matcher = pat.matcher(str);
+    	boolean flg = false;
+    	if (matcher.find()) {
+    		flg = true;
+    	}
+    	return flg;
+    }
+
+
+
+1.BigDecimal类型比较数值大小必须使用 public int compareTo(BigDecimal val)方法，返回－１小于，０等于，１大于
+2.常用IO流类：FileInputStream和FileOutputStream 
+  用于解析xml等类型文件：	org.dom4j.*;
+
+	FileInputStream initDateFile = new FileInputStream(fileName);
+	SAXReader saxReader = new SAXReader();
+	Document document = saxReader.read(initDateFile);
+
+	attribute和Element
+3.   以下是java 判断字符串是否为空的四种方法:
+  方法一: 最多人使用的一个方法, 直观, 方便, 但效率很低:
+                                    if(s == null ||"".equals(s));
+  方法二: 比较字符串长度, 效率高, 是我知道的最好一个方法:
+                      if(s == null || s.length() <= 0);
+  方法三: Java SE 6.0 才开始提供的方法, 效率和方法二几乎相等, 但出于兼容性考虑, 推荐使用方法二.
+                     if(s == null || s.isEmpty());
+  方法四: 这是一种比较直观,简便的方法,而且效率也非常的高,与方法二、三的效率差不多:
+                     if (s == null || s == "");
+
+	注意:s == null 是有必要存在的.
+　　如果 String 类型为null, 而去进行 equals(String) 或 length() 等操作会抛出java.lang.NullPointerException.
+　　并且s==null 的顺序必须出现在前面，不然同样会抛出java.lang.NullPointerException.
+4.String s ;该语句表示只是声明了一个引用变量,但是并没有初始化引用,所以对变量s的任何操作(除了初始化赋值外) 都将引发异常.
+  String s=null; 表示未申请任何内存资源，即些语句表示声明了一个引用变量并初始化引用,但是该引用没有指向任何对象.但可以把它作为参数传递或其它使用,但是不能调用它作为对象的方法
+  String s=""; 表示申请了内存资源，但资源空间值为空。该语句表示声明并引用到一个对象,只不过这个对象为0个字节.所以既然有了对象,就可以调用对象的方法
+  注意："" 也是字符串
+  String s = String.Empty 与 String s=""; 是完全相同的 
+5.instanceof是Java、php的一个二元操作符（运算符），和==，>，<是同一类东西。由于它是由字母组成的，所以也是Java的保留关键字。它的作用是判断其左边对象是否为其右边类的实例，返回boolean类型的数据。可以用来判断继承中的子类的实例是否为父类的实现。相当于c#中的is操作符。java中的instanceof运算符是用来在运行时指出对象是否是特定类的一个实例。instanceof通过返回一个布尔值来指出，这个对象是否是这个特定类或者是它的子类的一个实例。
+6.使用　break continue return　的时候注意范围
+ 
+
+GOF设计模式
+Java 中Timer和TimerTask 定时器和定时任务使用
+
+2.
+文件
+
+	File file = new File("" + ".xml");
+	FileUtils.writeStringToFile(file, sb.toString(), "UTF-8");
+
+3.
+判断是否为中文
+   static String regEx = "[\u4e00-\u9fa5]";
+   static Pattern pat = Pattern.compile(regEx);
+
+    public static boolean isContainsChinese(String str) {
+    	Matcher matcher = pat.matcher(str);
+    	boolean flg = false;
+    	if (matcher.find()) {
+    		flg = true;
+    	}
+    	return flg;
+    }
+
+
+
+1.BigDecimal类型比较数值大小必须使用 public int compareTo(BigDecimal val)方法，返回－１小于，０等于，１大于
+2.常用IO流类：FileInputStream和FileOutputStream 
+  用于解析xml等类型文件：	org.dom4j.*;
+
+	FileInputStream initDateFile = new FileInputStream(fileName);
+	SAXReader saxReader = new SAXReader();
+	Document document = saxReader.read(initDateFile);
+
+	attribute和Element
+3.   以下是java 判断字符串是否为空的四种方法:
+  方法一: 最多人使用的一个方法, 直观, 方便, 但效率很低:
+                                    if(s == null ||"".equals(s));
+  方法二: 比较字符串长度, 效率高, 是我知道的最好一个方法:
+                      if(s == null || s.length() <= 0);
+  方法三: Java SE 6.0 才开始提供的方法, 效率和方法二几乎相等, 但出于兼容性考虑, 推荐使用方法二.
+                     if(s == null || s.isEmpty());
+  方法四: 这是一种比较直观,简便的方法,而且效率也非常的高,与方法二、三的效率差不多:
+                     if (s == null || s == "");
+
+	注意:s == null 是有必要存在的.
+　　如果 String 类型为null, 而去进行 equals(String) 或 length() 等操作会抛出java.lang.NullPointerException.
+　　并且s==null 的顺序必须出现在前面，不然同样会抛出java.lang.NullPointerException.
+4.String s ;该语句表示只是声明了一个引用变量,但是并没有初始化引用,所以对变量s的任何操作(除了初始化赋值外) 都将引发异常.
+  String s=null; 表示未申请任何内存资源，即些语句表示声明了一个引用变量并初始化引用,但是该引用没有指向任何对象.但可以把它作为参数传递或其它使用,但是不能调用它作为对象的方法
+  String s=""; 表示申请了内存资源，但资源空间值为空。该语句表示声明并引用到一个对象,只不过这个对象为0个字节.所以既然有了对象,就可以调用对象的方法
+  注意："" 也是字符串
+  String s = String.Empty 与 String s=""; 是完全相同的 
+5.instanceof是Java、php的一个二元操作符（运算符），和==，>，<是同一类东西。由于它是由字母组成的，所以也是Java的保留关键字。它的作用是判断其左边对象是否为其右边类的实例，返回boolean类型的数据。可以用来判断继承中的子类的实例是否为父类的实现。相当于c#中的is操作符。java中的instanceof运算符是用来在运行时指出对象是否是特定类的一个实例。instanceof通过返回一个布尔值来指出，这个对象是否是这个特定类或者是它的子类的一个实例。
+6.使用　break continue return　的时候注意范围
+ 

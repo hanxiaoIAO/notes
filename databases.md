@@ -15,9 +15,31 @@
 
 [innode 意向锁](https://mp.weixin.qq.com/s?__biz=MjM5ODYxMDA5OQ==&mid=2651961461&idx=1&sn=b73293c71d8718256e162be6240797ef&chksm=bd2d0da98a5a84bfe23f0327694dbda2f96677aa91fcfc1c8a5b96c8a6701bccf2995725899a&scene=21#wechat_redirect)
 
+## hint语句
+
+​	用于优化一个sql的执行计划
+
+# SQL 语法
+
+## merge语句
+
+​	在SQL Server、Oracle数据库中可用，MySQL、PostgreSQL中不可用。
+​	MERGE是Oracle9i新增的语法，用来合并UPDATE和INSERT语句。在Oracle 10g之前，merge语句支持匹配更新和不匹配插入两种简单的用法，在10g中Oracle对merge语句做了增强，增加了条件选项和DELETE操作。
+​	通过MERGE语句，根据一张表（原数据表，source table）或子查询的连接条件对另外一张（目标表，target table）表进行查询，连接条件匹配上的进行UPDATE，无法匹配的执行INSERT。这个语法仅需要一次全表扫描就完成了全部工作，执行效率要高于INSERT+UPDATE。
+
+​	merge语法
+
+```sql
+MERGE [hint] INTO [schema ] table [t_alias]
+USING [schema ]{ table | view | subquery } [t_alias]
+ON ( condition )
+WHEN MATCHED THEN merge_update_clause
+WHEN NOT MATCHED THEN merge_insert_clause;
+```
+
 # MYSQL
 
-## linux
+## linux下安装
 
 1. 自启动(CentOS 7)
 

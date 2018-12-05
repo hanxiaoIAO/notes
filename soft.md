@@ -12,6 +12,10 @@ get 远程路径                   下载文件
 
 put -r
 
+# eclipse
+
+sonarLint插件
+
 # redis
 1.访问redis根目录    cd  /usr/local/redis-2.8.19
 2.登录redis：redis-cli -h 127.0.0.1 -p 6379

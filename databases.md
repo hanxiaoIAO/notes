@@ -93,7 +93,24 @@ WHEN NOT MATCHED THEN merge_insert_clause;
    chgrp -R mysql mysql/
    ```
 
+## 开远程访问
+
+```mysql
+grant all privileges on *.* to 'root'@'%' identified by 'root' with grant option;
+flush privileges;
+```
+
+
+
+
+
 ## 导入导出
+
+### 导入
+
+
+
+### 导出
 
 ```
 mysqldump -u用户名 -p密码 数据库名 > 导出的文件名
@@ -112,6 +129,17 @@ mysqldump -h127.0.0.1 -u用户名 -p密码 数据库名 > 导出的文件名
 ```
 
 # ORACLE
+
+## linux下连接数据库
+
+```shell
+# 将用户切换到Oracle
+su - oracle
+sqlplus / as sysdba
+conn username/password
+```
+
+
 
  步骤一：  删除user
 

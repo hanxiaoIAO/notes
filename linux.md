@@ -286,3 +286,132 @@ netstat -an | grep 3306   //查看所有3306端口使用情况·
 
 ## top
 
+
+
+# Ubuntu
+
+## 设置自启动
+在/etc/init.d/ 下以管理员权限新建文件
+使用以下模板修改启动脚本的内容
+
+```shell
+#!/bin/bash
+### BEGIN INIT INFO
+#
+# Provides:  location_server
+# Required-Start:   $local_fs  $remote_fs
+# Required-Stop:    $local_fs  $remote_fs
+# Default-Start:    2 3 4 5
+# Default-Stop:     0 1 6
+# Short-Description:    initscript
+# Description:  This file should be used to construct scripts to be placed in /etc/init.d.
+#
+### END INIT INFO
+
+## Fill in name of program here.
+PROG="location_server"
+PROG_PATH="/opt/location_server" ## Not need, but sometimes helpful (if $PROG resides in /opt for example).
+PROG_ARGS="" 
+PID_PATH="/var/run/"
+
+start() {
+    if [ -e "$PID_PATH/$PROG.pid" ]; then
+        ## Program is running, exit with error.
+        echo "Error! $PROG is currently running!" 1>&2
+        exit 1
+    else
+        ## Change from /dev/null to something like /var/log/$PROG if you want to save output.
+        $PROG_PATH/$PROG $PROG_ARGS 2>&1 >/var/log/$PROG &
+    $pid=`ps ax | grep -i 'location_server' | sed 's/^\([0-9]\{1,\}\).*/\1/g' | head -n 1`
+
+        echo "$PROG started"
+        echo $pid > "$PID_PATH/$PROG.pid"
+    fi
+}
+
+stop() {
+    echo "begin stop"
+    if [ -e "$PID_PATH/$PROG.pid" ]; then
+        ## Program is running, so stop it
+    pid=`ps ax | grep -i 'location_server' | sed 's/^\([0-9]\{1,\}\).*/\1/g' | head -n 1`
+    kill $pid
+
+        rm -f  "$PID_PATH/$PROG.pid"
+        echo "$PROG stopped"
+    else
+        ## Program is not running, exit with error.
+        echo "Error! $PROG not started!" 1>&2
+        exit 1
+    fi
+}
+
+## Check to see if we are running as root first.
+## Found at http://www.cyberciti.biz/tips/shell-root-user-check-script.html
+if [ "$(id -u)" != "0" ]; then
+    echo "This script must be run as root" 1>&2
+    exit 1
+fi
+
+case "$1" in
+    start)
+        start
+        exit 0
+    ;;
+    stop)
+        stop
+        exit 0
+    ;;
+    reload|restart|force-reload)
+        stop
+        start
+        exit 0
+    ;;
+    **)
+        echo "Usage: $0 {start|stop|reload}" 1>&2
+        exit 1
+    ;;
+esac
+```
+
+其中，PROG变量为所要运行的可执行程序的名称， PROG_PATH为可执行文件所在的目录，PROG_ARGS为执行程序的各个参数。 
+需要注意的是，在stop()函数中利用kill命令结束进程，有两种方法可以处理，一种是利用进程名称，如“location_server”查找相应的进程号，然后调用kill <进程号>结束进程，另一种方法是直接使用killall <进程名称>，但是在这种方法下，本启动脚本的名称不能和可执行文件的名称相同，不然的话，stop后会出现”Terminated“说明脚本也被kill掉。也可以在start()中将进程号存储在.pid文件中，然后在stop()中从文件中取得要结束的进程号，但是这样的话，还想获得的进程号会比实际进程号小2，现在还不知道是什么原因。
+
+添加删除服务
+
+```shell
+添加： sudo update-rc.d 服务名 defaults
+删除：sudo update-rc.d -f 服务名 remove
+```
+
+启动、关闭、重启服务
+
+```shell
+/etc/init.d/服务名 start
+/etc/init.d/服务名 stop
+/etc/init.d/服务名 start
+```
+
+### 其他相关内容
+
+[在Ubuntu 16.04 中将应用添加到系统服务中](https://blog.csdn.net/u013685902/article/details/78452482)
+
+## 重装VIM
+
+```shell
+# 卸载
+sudo apt-get remove vim-common 
+# 安装
+sudo apt-get install vim 
+sudo apt-get install vim-gtk 
+```
+# shell脚本备忘
+1.把文件重命名为以日期结尾
+
+```shell
+export time=`date +%H:%M:%S`
+mv -b -S $time webapps/yigo/WEB-INF/classes/logs/* webapps/yigo/WEB-INF/classes/log.bak 
+```
+
+
+
+

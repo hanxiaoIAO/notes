@@ -29,3 +29,6 @@ server{
 ​		proxy_pass http://ERP;
 ​	}
 }
+
+# 其他
+[nginx proxy_set_header设置、自定义header](https://blog.csdn.net/bao19901210/article/details/52537279)

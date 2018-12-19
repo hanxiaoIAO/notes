@@ -6,9 +6,9 @@
 
 ​	早期 boot2docker 以及 Docker for Windows 工具都是以虚拟机的形式在异构操作系统(Windows、macOS )上运行 Docker 。但本身基于 linux 的 Docker 不支持 Windows 应用。
 
-​	后来，微软与 Docker 在14年宣布合作，
+​	后来，微软与 Docker 在14年宣布合作，为传统的 Windows 应用程序的容器化改造提供了直接的支持。15 年推出为容器优化的 Windows Nano Server。16 年 Windows 10 的年度更新上，正式提供了 Windows 容器的开发环境。17 年推出 Windows Server 1709 版本包含了 Windows 容器，意味着这项技术可以用于生产环境。
 
 ### LXC(Linux Container)
 
-​	Linux Container 容器是一种内核虚拟化技术，可以提供轻量级的虚拟化，以便隔离进程和资源。LXC 在资源管理方面依赖于 Linux 内核的 cgroups 子系统， cgroups 子系统是 Linux 内核提供的一个基于进程组的资源管理的框架，可以为特定的进程组限定可以使用的资源。 LXC 在隔离控制方面依赖于 Linux 内核的namespace 特性，具体而言就是在 clone 时加入相应的 flag(NEWNS NEWPID等等)。。
+​	Linux Container 容器是一种内核虚拟化技术，可以提供轻量级的虚拟化，以便隔离进程和资源。LXC 在资源管理方面依赖于 Linux 内核的 cgroups 子系统， cgroups 子系统是 Linux 内核提供的一个基于进程组的资源管理的框架，可以为特定的进程组限定可以使用的资源。 LXC 在隔离控制方面依赖于 Linux 内核的namespace 特性，具体而言就是在 clone 时加入相应的 flag(NEWNS NEWPID等等)。
 

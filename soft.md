@@ -16,17 +16,6 @@ put -r
 
 sonarLint插件
 
-# redis
-1.访问redis根目录    cd  /usr/local/redis-2.8.19
-2.登录redis：redis-cli -h 127.0.0.1 -p 6379
-3.查看所有key值：keys *
-4.删除指定索引的值：del key
-5.清空整个 Redis 服务器的数据：flushall 
-6.清空当前库中的所有 key：flushdb 
-
-Redis 启动,采用指定配置文件的启动方式：
-redis-server /home/erp10/redis-2.8.24/redis.conf &
-
 # tomcat 
 配置apr模式
 sudo apt-get install libapr1-dev

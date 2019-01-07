@@ -12,3 +12,51 @@
 
 ​	Linux Container 容器是一种内核虚拟化技术，可以提供轻量级的虚拟化，以便隔离进程和资源。LXC 在资源管理方面依赖于 Linux 内核的 cgroups 子系统， cgroups 子系统是 Linux 内核提供的一个基于进程组的资源管理的框架，可以为特定的进程组限定可以使用的资源。 LXC 在隔离控制方面依赖于 Linux 内核的namespace 特性，具体而言就是在 clone 时加入相应的 flag(NEWNS NEWPID等等)。
 
+## Docker
+
+### Docker与传统虚拟化的不同
+
+如图，容器是在操作系统层面上实现虚拟化，直接服用本地的操作系统，而传统的方式则是在硬件层面实现。
+
+![virtualization](Docker/virtualization.png)
+
+![docker](Docker/docker.png)
+
+### Docker引擎
+
+Docker 是一个c/s结构的应用，主要组件如图：
+
+![docker engine components flow](Docker/engine-components-flow.png)
+
+## 操作
+
+操作以ubuntu为例
+
+### 安装
+
+ubuntu 在 14.04 版本之后，将提供了一份安装脚本，挂在网站上，用户可以用以下命令安装 Docker
+
+```shell
+curl -sSL https://get.docker.com/ | sh
+```
+
+### 添加用户组
+
+避免每次都需要sudo运行
+
+```shell
+sudo groupadd docker
+sudo gpasswd -a 当前登录用户名  docker
+重启docker服务：service docker restart,再退出当前登录，重新登录
+```
+
+## Docker 构建 —— Dockerfile
+
+​	Dockerfile 是一个用于包含用于组合镜像的命令的文本文档。Docker 通过读取 Dockerfile 中的指令自动生成镜像。
+
+​	Docker Builder 命令用于从 Dockerfile 中构建镜像。
+
+```shell
+docker build -f /home/fendo/Dockerfile
+```
+

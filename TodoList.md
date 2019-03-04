@@ -27,4 +27,10 @@
 
 ## 开发工具
 
-- [ ]  eclipse,idea
+- [ ] eclipse,idea
+
+
+
+## 其他
+
+- [ ] nginx 超时配置整理

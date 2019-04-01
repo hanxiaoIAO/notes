@@ -119,7 +119,29 @@ flush privileges;
 bind-address = 0.0.0.0  # 表示允许任何主机登陆MySQL
 ```
 
+## ERROR:authentication plugin caching_sha2
 
+mysql 8.0 默认使用 caching_sha2_password 身份验证机制 —— 从原来的 mysql_native_password 更改为 caching_sha2_password。
+
+从 5.7 升级 8.0 版本的不会改变现有用户的身份验证方法，但新用户会默认使用新的 caching_sha2_password 。
+
+客户端不支持新的加密方式。
+
+方法之一，修改用户的密码和加密方式
+
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';
+
+如果使用以前的密码加密方式，就修改文件 /etc/my.cnf
+
+```
+[mysqld]
+default_authentication_plugin=mysql_native_password
+```
+
+## mysql8.0+
+
+Driver=com.mysql.cj.jdbc.Driver
+URL=jdbc:mysql://localhost:3306/wshh?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
 
 
 

@@ -12,10 +12,6 @@ get 远程路径                   下载文件
 
 put -r
 
-# eclipse
-
-sonarLint插件
-
 # tomcat 
 配置apr模式
 sudo apt-get install libapr1-dev

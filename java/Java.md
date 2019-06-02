@@ -24,7 +24,7 @@ final可以修饰变量，方法和类。
 
 当一个类被final修饰时，表名该类是不能被子类继承的。
 
-
+#### 宏变量
 
 利用final变量的不可更改性，在满足一下三个条件时，该变量就会成为一个“宏变量”，即是一个常量。
 
@@ -69,8 +69,6 @@ public class Test {
 false
 ```
 
-
-
 static作用于成员变量用来表示只保存一份副本，而final的作用是用来保证变量不可变
 
 ```java
@@ -95,7 +93,7 @@ i的值是不同的
 j的值是相同的
 ```
 
-
+#### 匿名内部类中的final
 
 匿名内部类中使用的外部局部变量为什么只能是final变量？
 
@@ -103,31 +101,329 @@ j的值是相同的
 
 
 
-### 容器
+### transient
+
+​	Java的serialization提供了一种持久化对象实例的机制。当持久化对象时，可能有一个特殊的对象数据成员，我们不想用serialization机制来保存它。为了在一个特定对象的一个域上关闭serialization，可以在这个域前加上关键字transient。当一个对象被序列化的时候，transient型变量的值不包括在序列化的表示中，然而非transient型的变量是被包括进去的。
+
+### volatile
+
+volatile是Java提供的一种轻量级的同步机制，在并发编程中，它也扮演着比较重要的角色。同synchronized相比（synchronized通常称为重量级锁），volatile更轻量级。
+
+两个特性：
+
+1. 保证共享变量对所有线程的可见性。
+
+2. 禁止指令重排序优化。
+
+## 容器
 
 Java容器类类库的用途是“持有对象”，并将其划分为两个不同的概念：
 
-**１）Collection：一个独立元素的序列，这些元素都服从一条或者多条规则。** List必须按照插入的顺序保存元素，而set不能有重复的元素。Queue按照排队规则来确定对象产生的顺序（通常与它们被插入的顺序相同）。 
-**2）Map：一组成对的“键值对”对象，允许你使用键来查找值。**
+1. Collection：一个独立元素的序列，这些元素都服从一条或者多条规则。
+2. Map：一组成对的“键值对”对象，允许你使用键来查找值。
 
-**|Collection** 
-|　　├List 
-|　　│ ├LinkedList 
-|　　│ ├ArrayList 
-|　　│ └Vector 
-|　　│　  └Stack 
-|　　├Set 
-|　　│├HashSet 
-|　　│├TreeSet 
-|　　│└LinkedSet 
-| 
-|**Map** 
-　　├Hashtable 
-　　├HashMap 
-　　└WeakHashMap
+Collection 接口又有 3 种子类型，List、Set 和 Queue
 
-> 注： **1、java.util.Collection 是一个集合接口。**它提供了对集合对象进行基本操作的通用接口方法。Collection接口在Java 类库中有很多具体的实现。Collection接口的意义是为各种具体的集合提供了最大化的统一操作方式。 
-> 　　**2、java.util.Collections 是一个包装类。**它包含有各种有关集合操作的静态多态方法。此类不能实例化，就像一个工具类，服务于Java的Collection框架。
+### List
+
+List接口是一个有序的 Collection，使用此接口能够精确的控制每个元素插入的位置，能够通过索引(元素在List中位置，类似于数组的下标)来访问List中的元素，第一个元素的索引为 0，而且允许有相同的元素。
+
+List 接口存储一组不唯一，有序（插入顺序）的对象。
+
+在List被第一次创建的时候，会有一个初始大小，随着不断向List中增加元素，当List认为容量不够的时候就会进行扩容。
+
+| ArrayList                                                    | Vector                                                       | Stack               | LinkedList                                              | CopyOnWriteArrayList                                         |
+| :----------------------------------------------------------- | :----------------------------------------------------------- | ------------------- | ------------------------------------------------------- | ------------------------------------------------------------ |
+| 1. 底层是数组数据结构。<br>2. 由于本质是数组，所以实现随机访问，而且速度较快，按照元素插入的顺序保持数据。<br>3. 删除和移动元素性能较低，因为会导致整个集合元素的移动。<br>4. 线程不安全的。<br>5.ArrayList缺省情况下自动增长原来的50%。 | 1. 底层是数组数据结构。<br/>2. 线程安全。<br>3. Vector缺省情况下自动增长原来一倍的数组长度。<br>4. 但是现在Vector现在一般不再使用，如需在多线程下使用，可以用CopyOnWriteArrayList，在java.util.concurrent包下。 | 继承Vector,先进后出 | 1. 基于链表实现的，是一个双向链表。<br>2.线程不安全的。 | 1. 底层是用volatile transient声明的数组 array<br>2. 内部持有一个ReentrantLock lock = new ReentrantLock();<br>3. 读写分离，写时复制出一个新的数组，完成插入、修改或者移除操作后将新数组赋值给array<br>4.增删改都需要获得锁，并且锁只有一把，而读操作不需要获得锁，支持并发。 |
+
+
+
+### set
+
+Set 具有与 Collection 完全一样的接口，只是行为上不同，Set 不保存重复的元素。
+
+Set 接口存储一组唯一，无序的对象。
+
+
+
+| HashSet                                                      | TreeSet                                                      | LinkedHashSet                                                |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| 采用hash表算法来实现的，其中的元素没有按顺序排列，主要有add()、remove()以及contains()等方法。<br>HashSet的实现原理其实是HashMap。 | TreeSet是采用树结构实现(称为红黑树算法)，元素是按顺序进行排列，主要有add()、remove()以及contains()等方法，它们都是复杂度为O(log (n))的方法；它还提供了一些处理排序的set方法，如first(), last(), headSet(), tailSet()等。 | 以元素插入的顺序来维护集合的链接表，允许以插入的顺序在集合中迭代。<br>LinkedHashSet的实现原理其实是LinkedHashMap |
+
+### queue
+
+队列是一种特殊的线性表，它只允许在表的前端（front）进行删除操作，而在表的后端（rear）进行插入操作。进行插入操作的端称为队尾，进行删除操作的端称为队头。队列中没有元素时，称为空队列。
+
+### map
+
+| HashMap                                                      | LinkedHashMap                                                | TreeMap                                                      | HashTable                                                    | ConcurrentHashMap                                            |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| 1. 允许使用null键和null值,不保证映射的顺序<br>2. 也不是同步的 | 1.LinkedHashMap可以认为是**HashMap+LinkedList**，即它既使用HashMap操作数据结构，又使用LinkedList维护插入元素的先后顺序。 | 1. 一个有序的key-value集合，基于红黑树（Red-Black tree）的 NavigableMap实现。<br>2. 根据其键的自然顺序进行排序，或者根据创建映射时提供的 Comparator进行排序。<br>3. 不允许null键 | Hashtable 的方法都是**同步的**，这意味着它是线程安全的。它的key、value都不可以为null。此外，Hashtable中的映射不是有序的。<br>用synchronized来保证线程安全，但在线程竞争激烈的情况下HashTable的效率非常低下。 | ConcurrentHashMap是由Segment数组结构和HashEntry数组结构组成。Segmentjich继承可重入锁ReentrantLock，在ConcurrentHashMap里扮演锁的角色，HashEntry则用于存储键值对数据。 |
+
+## 字符串
+
+| String                                                       | StringBuilder | StringBuffer |
+| ------------------------------------------------------------ | ------------- | ------------ |
+| 1.对String对象的任何改变都不影响到原对象，相关的任何change操作都会生成新的对象。<br> | 线程不安全    | 线程安全     |
+
+## 线程
+
+线程状态：新建、就绪、运行、阻塞、死亡。
+
+### 线程的优先级
+
+每一个 Java 线程都有一个优先级，这样有助于操作系统确定线程的调度顺序。
+
+Java 线程的优先级是一个整数，其取值范围是 1 （Thread.MIN_PRIORITY ） - 10 （Thread.MAX_PRIORITY ）。
+
+默认情况下，每一个线程都会分配一个优先级 NORM_PRIORITY（5）。
+
+具有较高优先级的线程对程序更重要，并且应该在低优先级的线程之前分配处理器资源。但是，线程优先级不能保证线程执行的顺序，而且非常依赖于平台。
+
+### 创建一个线程
+
+Java 提供了三种创建线程的方法：
+
+- 通过实现 Runnable 接口；
+
+```java
+public class MyRun implements Runnable{
+	public void run(){
+		while(true){
+			System.out.println("MyThread类的run()方法在运行");
+		}
+	}
+}
+
+public class MyMain {
+    public static void main(String[] args)  {
+    	MyRun run = new MyRun();
+        Thread thread = new Thread(run);
+        thread.start();
+        
+        System.out.println("done");
+    }
+}
+```
+
+
+
+- 通过继承 Thread 类本身；
+
+```java
+public class MyThread extends Thread{
+    private static int num = 0;
+     
+    public MyThread(){
+        num++;
+    }
+     
+    @Override
+    public void run() {
+    	while(true)
+        System.out.println("主动创建的第"+num+"个线程");
+    }
+}
+
+public class MyMain {
+    public static void main(String[] args)  {
+    	MyThread thread = new MyThread();
+        thread.start();
+        
+        System.out.println("done");
+    }
+}
+```
+
+
+
+- 通过 Callable 和 Future 创建线程。
+
+```java
+public class MyCallable implements Callable<Integer> {
+	@Override
+    public Integer call() throws Exception {
+        int sum = 0;
+        for (int i = 0; i <= 100000; i++) {
+            sum = i;
+        }
+        return sum;
+    }
+}
+
+public class MyMain {
+	public static void main(String[] args) throws Throwable {
+		//方式1 利用线程池
+		ExecutorService executor = Executors.newCachedThreadPool();
+		MyCallable callabe = new MyCallable();
+		Future<Integer> future = executor.submit(callabe);
+		System.out.println(future.get());
+		executor.shutdown();
+		//方式2 利用线程池
+		ExecutorService executor1 = Executors.newCachedThreadPool();
+		MyCallable callabe1 = new MyCallable();
+        FutureTask<Integer> futureTask = new FutureTask<Integer>(callabe1);
+       	Future<?> future1 =  executor1.submit(futureTask);
+        System.out.println(futureTask.get());
+        System.out.println(future1.get());
+        executor1.shutdown();
+        //方式3
+        MyCallable callabe2 = new MyCallable();
+        FutureTask<Integer> futureTask2 = new FutureTask<Integer>(callabe2);
+        Thread thread = new Thread(futureTask1);
+        thread.start();
+        System.out.println(futureTask2.get());
+	}
+}
+
+```
+
+
+
+- 通过线程池创建线程
+
+### Callable和Runable的差别
+
+1.   Callable规定的方法是call()，而Runnable规定的方法是run()。
+2.   Callable的任务执行后可返回值，而Runnable的任务是不能返回值的。  
+3.   call()方法可抛出异常，而run()方法是不能抛出异常的。 
+4. Callable是类似于Runnable的接口，实现Callable接口的类和实现Runnable的类都是可被其它线程执行的任务。 
+
+
+
+1.   运行Callable任务可拿到一个Future对象， Future表示异步计算的结果。 
+2.   它提供了检查计算是否完成的方法，以等待计算的完成，并检索计算的结果。 
+3.   通过Future对象可了解任务执行情况，可取消任务的执行，还可获取任务执行的结果。 
+
+
+
+## 接口和抽象类的差别
+
+设计层面：
+
+- 抽象类是对整个类整体进行抽象，包括属性、行为，但是接口却是对类局部（行为）进行抽象。
+
+语法：
+
+- 接口中的所有方法隐含的都是抽象的。而抽象类则可以同时包含抽象和非抽象的方法。
+- 类可以实现多个接口，但是只能继承一个抽象类。接口可以继承多个接口。
+- 接口中不能含有静态代码块以及静态方法，而抽象类可以有静态代码块和静态方法。
+- 抽象类中的成员变量可以是各种类型的，而接口中的成员变量只能是public static final类型的。
+
+## Java中修饰符的作用域及可见性
+
+| 作用域            | 当前类 | 同一package | 子孙类 | 其他package |
+| ----------------- | ------ | ----------- | ------ | ----------- |
+| public            | ✔      | ✔           | ✔      | ✔           |
+| protected         | ✔      | ✔           | ✔      | ×           |
+| default(无修饰符) | ✔      | ✔           | ×      | ×           |
+| private           | ✔      | ×           | ×      | ×           |
+
+## 数据类型
+
+​	基本数据类型：
+
+​	整数值型：
+
+​			byte：数据类型是8位、有符号的，以二进制补码表示的整数。(-128~127）二字节
+
+​			short:数据类型是 16 位、有符号的以二进制补码表示的整数。(-32768~32767) 四字节
+
+​			int:数据类型是32位、有符号的以二进制补码表示的整数。八字节
+
+​			long:数据类型是 64 位、有符号的以二进制补码表示的整数。十六字节
+
+​	字符型：char 八字节
+
+​	浮点型：
+
+​			float: 八字节
+
+​			double: 十六字节
+
+​	布尔型：boolean
+
+​	枚举类型：enmu
+
+​	整数默认int型，小数默认double型。float和long类型的必须加后缀。
+
+​	首先知道String是引用类型，自动装箱和拆箱就是基本类型和引用类型之间的转换。基本类型转换为引用类型之后，就可以new对象，从而调用包装类中封装好的方法进行基本类型之间的转换或者toString(当然用类名直接调用也可以，便于一眼看出该方法是静态的)，还有就是如果集合中想存放基本类型，泛型的限定类只能是对应的包装类型。
+
+
+
+```java
+public class TestEnum
+{
+    public enum Color
+    {
+        RED("红色",1),GREEN("绿色",2),WHITE("白色",3),YELLOW("黄色",4);
+        //成员变量
+        private String name;
+        private int index;
+        //构造方法
+        private Color(String name,int index)
+        {
+            this.name=name;
+            this.index=index;
+        }
+        //覆盖方法
+        @Override
+        public String toString()
+        {
+            return this.index+"-"+this.name;
+        }
+    }
+    public static void main(String[] args)
+    {
+        System.out.println(Color.RED.toString());    //输出：1-红色
+    }
+}
+```
+
+
+
+## 异常
+
+　　Java异常是Java提供的一种识别及响应错误的一致性机制。
+
+### 关键字
+
+​		Java异常机制用到的几个关键字：**try、catch、finally、throw、throws。**
+
+• **try**        -- 用于监听。将要被监听的代码(可能抛出异常的代码)放在try语句块之内，当try语句块内发生异常时，异常就被抛出。
+• **catch**   -- 用于捕获异常。catch用来捕获try语句块中发生的异常。
+• **finally**  -- finally语句块总是会被执行。它主要用于回收在try块里打开的物力资源(如数据库连接、网络连接和磁盘文件)。只有finally块，执行完成之后，才会回来执行try或者catch块中的return或者throw语句，如果finally中使用了return或者throw等终止方法的语句，则就不会跳回执行，直接停止。
+• **throw**   -- 用于抛出异常。
+• **throws** -- 用在方法签名中，用于声明该方法可能抛出的异常。
+
+### java异常框架
+
+1. Throwable
+　　Throwable是 Java 语言中所有错误或异常的超类。
+Throwable包含两个子类: **Error** 和 **Exception**。它们通常用于指示发生了异常情况。
+Throwable包含了其线程创建时线程执行堆栈的快照，它提供了printStackTrace()等接口用于获取堆栈跟踪数据等信息。
+
+2. Exception
+　　Exception及其子类是 Throwable 的一种形式，它指出了合理的应用程序想要捕获的条件。
+
+3. Error
+   
+   和Exception一样，Error也是Throwable的子类。它用于指示合理的应用程序不应该试图捕获的严重问题，大多数这样的错误都是异常条件。编译器也不会检查Error。
+   
+   当资源不足、约束失败、或是其它程序无法继续运行的条件发生时，就产生错误。程序本身无法修复这些错误的。
+   
+4. RuntimeException
+   　　Exception的子类。RuntimeException是那些可能在 Java 虚拟机正常运行期间抛出的异常的超类。
+   编译器不会检查RuntimeException异常。
+   如果代码会产生RuntimeException异常，则需要通过修改代码进行避免。例如，若会发生除数为零的情况，则需要通过代码避免该情况的发生！
+   
+5. 被检查的异常
+
+     Exception类本身，以及Exception的子类中除了"运行时异常"之外的其它子类都属于被检查异常。
+
+     Java编译器会检查它。此类异常，要么通过throws进行声明抛出，要么通过try-catch进行捕获处理，否则不能通过编译。
+
+
 
 ## TODO
 

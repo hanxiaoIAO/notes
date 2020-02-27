@@ -1,3 +1,7 @@
+[TOC]
+
+
+
 # SQL
 
 ## 事务ACID特性
@@ -19,7 +23,7 @@
 
 ​	用于优化一个sql的执行计划
 
-# SQL 语法
+# SQL 语法和报错
 
 ## merge语句
 
@@ -37,14 +41,29 @@ WHEN MATCHED THEN merge_update_clause
 WHEN NOT MATCHED THEN merge_insert_clause;
 ```
 
-# redis
+## MySQL报错：Data truncated for column
 
-1.访问redis根目录    cd  /usr/local/redis-2.8.19
-2.登录redis：redis-cli -h 127.0.0.1 -p 6379
-3.查看所有key值：keys *
-4.删除指定索引的值：del key
-5.清空整个 Redis 服务器的数据：flushall 
-6.清空当前库中的所有 key：flushdb 
+原因:
+
+更新字段长度超过列的长度
+
+在修改主键时，如果表中有数据或者设置主键的那一列数据为NULL
+
+## 修改字段长度
+
+alter table <表名> alter column <字段名> 新类型名(长度)
+
+informax数据库修改字段语法为
+
+alter table 表名 modify 字段名 varchar(200)
+
+# redis
+1. 访问redis根目录    cd  /usr/local/redis-2.8.19
+2. 登录redis：redis-cli -h 127.0.0.1 -p 6379
+3. 查看所有key值：keys *
+4. 删除指定索引的值：del key
+5. 清空整个 Redis 服务器的数据：flushall 
+6. 清空当前库中的所有 key：flushdb 
 
 Redis 启动,采用指定配置文件的启动方式：
 redis-server /home/erp10/redis-2.8.24/redis.conf &

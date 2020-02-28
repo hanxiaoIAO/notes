@@ -1,4 +1,7 @@
+[toc]
+
 # 常用操作以及概念
+
 ## 查看版本
 
 ```shell
@@ -405,11 +408,19 @@ sudo apt-get install vim
 sudo apt-get install vim-gtk 
 ```
 # shell脚本备忘
+
 1.把文件重命名为以日期结尾
 
 ```shell
 export time=`date +%H:%M:%S`
 mv -b -S $time webapps/yigo/WEB-INF/classes/logs/* webapps/yigo/WEB-INF/classes/log.bak 
+```
+
+2.读取文本内容，然后把内容赋值给变量，然后进行字符串处理
+
+```shell
+export dataline=$(cat /root/data/data.txt)
+echo $dataline
 ```
 
 
@@ -487,6 +498,7 @@ systemctl是CentOS7的服务管理工具中主要的工具，它融合之前serv
 service 脚本在/etc/systemd/system下
 ***.service 服务脚本
 范本：
+
 ```shell
 [Unit]
 Description=
@@ -500,6 +512,5 @@ ExecStop=
 WantedBy=multi-user.target
 ```
 ExecStart 制定的脚本需要开头加上#!/bin/sh
-
 
 

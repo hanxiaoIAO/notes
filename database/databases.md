@@ -49,6 +49,50 @@ WHEN NOT MATCHED THEN merge_insert_clause;
 
 在修改主键时，如果表中有数据或者设置主键的那一列数据为NULL
 
+## mysql遇见Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggre的问题
+
+MySQL 5.7.5及以上功能依赖检测功能。如果启用了ONLY_FULL_GROUP_BY  SQL模式（默认情况下），MySQL将拒绝选择列表，HAVING条件或ORDER BY列表的查询引用在GROUP  BY子句中既未命名的非集合列，也不在功能上依赖于它们。（5.7.5之前，MySQL没有检测到功能依赖关系，默认情况下不启用ONLY_FULL_GROUP_BY。有关5.7.5之前的行为的说明，请参见“MySQL 5.6参考手册”。）
+
+解决方法一：
+
+打开navcat，
+
+用sql查询：
+
+select @@global.sql_mode
+
+查询出来的值为：
+
+ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+
+去掉ONLY_FULL_GROUP_BY，重新设置值。
+
+set @@global.sql_mode 
+ =’STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION’;
+
+
+解决方法二：
+
+成功的步骤：
+
+iterm打开
+
+sudo vim /etc/mysql/conf.d/mysql.cnf
+
+滚动到文件底部复制并粘贴
+
+[mysqld] 
+ sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+
+到文件的底部
+
+保存并退出输入模式
+
+sudo service mysql restart
+
+重启MySQL。 
+ 完成！
+
 ## 修改字段长度
 
 alter table <表名> alter column <字段名> 新类型名(长度)
@@ -57,7 +101,26 @@ informax数据库修改字段语法为
 
 alter table 表名 modify 字段名 varchar(200)
 
+## mysql的表复制及其表之间的数据转移
+
+1.复制表结构及数据到新表 
+CREATE TABLE 新表 SELECT * FROM 旧表 
+
+
+2.只复制表结构到新表 
+CREATE TABLE 新表 SELECT * FROM 旧表 WHERE 1=2 
+即:让WHERE条件不成立. 
+
+
+3.复制旧表的数据到新表(假设两个表结构一样) 
+INSERT INTO 新表 SELECT * FROM 旧表 
+
+
+4.复制旧表的数据到新表(假设两个表结构不一样) 
+INSERT INTO 新表(字段1,字段2,.......) SELECT 字段1,字段2,...... FROM 旧表 
+
 # redis
+
 1. 访问redis根目录    cd  /usr/local/redis-2.8.19
 2. 登录redis：redis-cli -h 127.0.0.1 -p 6379
 3. 查看所有key值：keys *

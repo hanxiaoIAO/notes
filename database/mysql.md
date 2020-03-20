@@ -1,3 +1,7 @@
+[toc]
+
+
+
 ## 远程访问
 
 设置权限
@@ -64,6 +68,8 @@ ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';
 default_authentication_plugin=mysql_native_password
 ```
 
+
+
 ## linux下安装
 
 1. 自启动(CentOS 7)
@@ -116,4 +122,12 @@ default_authentication_plugin=mysql_native_password
    chown -R mysql mysql/
    chgrp -R mysql mysql/
    ```
+
+## linux 环境中 /tmp/mysql.sock 不存在的解决方法
+
+my.cnf中修改了socket的默认路径，处理方法：
+
+```shell
+ln -s /usr/local/mysql/mysql.sock /tmp/mysql.sock 
+```
 

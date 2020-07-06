@@ -44,10 +44,28 @@ mysqldump -h127.0.0.1 -u用户名 -p密码 数据库名 > 导出的文件名
 
 ## mysql8.0+
 
+驱动包用的是mysql-connector-java-8.0.11.jar 
+
+新版的驱动类改成了com.mysql.cj.jdbc.Driver 
+
 ```
 Driver=com.mysql.cj.jdbc.Driver
 URL=jdbc:mysql://localhost:3306/wshh?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
 ```
+
+### ServerTimeZone
+
+新版必须指定时区，否则会报错。
+
+常用时区
+
+```
+serverTimezone=UTC //全球标准时间 和国内有8个小时的时差，北京时区也就是东八区，领先UTC八个小时。
+serverTimezone=GMT%2B8 //北京时间东八区 有的地方识别不了GMT%2B8。
+serverTimezone=Asia/Shanghai //上海时间
+```
+
+
 
 ### ERROR:authentication plugin caching_sha2
 

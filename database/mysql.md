@@ -86,7 +86,42 @@ ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';
 default_authentication_plugin=mysql_native_password
 ```
 
+### SSL
 
+之后还有一个在关闭连接对象时会产生的一个无关紧要的报错，不解决也可以正常使用，但是占据控制台的大量篇幅，导致使用体验极差：
+
+```
+javax.net.ssl.SSLException
+MESSAGE: closing inbound before receiving peer's close_notify
+```
+
+MySQL 8.0开始，数据库URL需要设置是否使用SSL安全连接，在URL后面加上参数useSSL=false即可，多个参数键值对中间用&隔开：
+
+```
+url=jdbc:mysql://localhost:3306/test?serverTimezone=GMT%2B8&useSSL=false
+```
+
+### Public Key Retrieval报错
+
+重启服务器后悔出现Public Key Retrieval报错：
+
+```
+java.sql.SQLNonTransientConnectionException: Public Key Retrieval is not allowed
+```
+
+在URL后加上allowPublicKeyRetrieval=true即可
+
+```
+url=jdbc:mysql://localhost:3306/test?serverTimezone=GMT%2B8&useSSL=false&allowPublicKeyRetrieval=true
+```
+
+### getTables默认返回所有库的表
+
+8.0及以上版本的驱动默认将nullCatalogMeansCurrent的默认值由true改为了false，如果使用DatabaseMetaData类的对象调用getTables方法，就会返回所有库的表，而非在url参数中指定的数据库（本例中数据库名为test）。此时就需要手动在参数中指定nullCatalogMeansCurrent值为true：
+
+```
+url=jdbc:mysql://localhost:3306/test?serverTimezone=GMT%2B8&useSSL=false&useSSL=false&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true
+```
 
 ## linux下安装
 

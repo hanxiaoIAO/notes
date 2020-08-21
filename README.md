@@ -19,7 +19,10 @@
 ## 数据库
 
 - [database](database/databases.md)
-- [mysql](database/mysql.md)
+- [MySQL设置远程访问权限](database/MySQL设置远程访问权限.md)
+- [MySQL8.0特性](database/MySQL8.0特性.md)
+- [MySQL在linux系统下的应用](database/MySQL在linux系统下的应用.md)
+- [Redis简单使用](database/Redis简单使用.md)
 
 ## spring
 
@@ -34,6 +37,10 @@
 - [jquery](Web/jquery.md)
 
 ## 工具和中间件
+
+- [SVN](软件和中间件/SVN.md)
+
+## 杂项
 
 
 

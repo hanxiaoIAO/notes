@@ -19,6 +19,7 @@
 ## 数据库
 
 - [database](database/databases.md)
+- [MySQL使用技巧](database/MySQL使用技巧.md)
 - [MySQL设置远程访问权限](database/MySQL设置远程访问权限.md)
 - [MySQL8.0特性](database/MySQL8.0特性.md)
 - [MySQL在linux系统下的应用](database/MySQL在linux系统下的应用.md)
@@ -35,6 +36,8 @@
 - [web](Web/web.md)
 - [Quokka](Web/Quokka.md)
 - [jquery](Web/jquery.md)
+- [加载完成事件](Web/加载完成事件.md)
+- [与服务器交换数据](Web/与服务器交换数据.md)
 
 ## 工具和中间件
 

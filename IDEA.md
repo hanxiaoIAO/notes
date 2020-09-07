@@ -11,3 +11,11 @@ tag:# idea软件配置文件 # 内存
 tag:# 内存 # 编译
 
 File->Settings（ctrl+alt+S）:  Build,Execution,Deployment -> Compiler  : Build process heap size(Mbytes)
+
+
+
+## 快捷键
+
+### 查看方法的具体实现而不是接口
+
+快捷键ctrl+alt+鼠标，点击进去即可。

@@ -1,0 +1,78 @@
+## Explain
+
+工作过程中，需要针对一些执行较慢的 SQL 语句进行优化。
+
+Explain 命令可以用来查看 SQL 语句的执行计划，查看该 SQL 语句有没有使用索引，有没有做全表扫描。
+
+![image-20200909111034830](resources/Explain命令)
+
+> ### id
+>
+> SELECT 的查询序列号
+>
+> id值越大，优先级越高，id相同的从上往下顺序执行
+>
+> ### select_type
+>
+> 每个 SELECT 子句的类型
+>
+> 1. SIMPLE：简单 SELECT，不使用 UNION 或子查询等
+> 2. PRIMARY: 子查询中最外层的查询
+> 3. UNION: UNION 中第二个或后面的 SELECT 语句 
+> 4. DEPENDENT UNION： UNION 中第二个或后面的 SELECT 语句 ,依赖外部查询
+> 5. UNION RESULT: UNION的结果，UNION语句中第二个 SELECT 开始后面所有 SELECT
+> 6. SUBQUERY:子查询中的第一个 SELECT ,结果不依赖于外部查询
+> 7. DEPENDENT SUBQUERY：子查询中的第一个 SELECT ,结果依赖于外部查询
+> 8. DERIVED：派生表的 SELECT，FROM子句的子查询
+> 9. UNCACHEABLE SUBQUERY：一个子查询的结果不能被缓存，必须重新评估外链接的第一行。
+>
+> ### table
+>
+> 显示这一步访问数据库中的表名称。
+>
+> ### partitions
+>
+> 版本5.7以前，该项是explain partitions显示的选项，5.7以后成为了默认选项。该列显示的为分区表命中的分区情况。非分区表该字段为空（null）。
+>
+> ### type
+>
+> 对表的访问类型，表示 MYQL 在表中找到所需行的方式，又称 "访问类型"。
+>
+> 常用的类型，从上到下，性能由差到好
+>
+> 1. ALL：Full Table Scan，MySQL 将遍历全表以找到匹配的行
+> 2. index：Ful Index Sacan，index 与 ALL 区别为 index 类型只遍历索引树
+> 3. range：只检索给定范围的行，使用一个索引来选择行
+> 4. ref：表示上述表的连接匹配条件，即那些列或常量被用于查找索引列上的值
+> 5. eq_rf：类似ref，区别在于使用的索引是唯一索引，对于每个索引键值，表中只有一条记录匹配，简单来说，就是多表连接中使用primary key 或者 unique key 作为关联条件
+> 6. const、system：当 MySQL 对查询某部分进行优化，并转换为一个常量时，使用这些类型访问。如将主键置于 where 列表中，MySQL就能将该查询转换为一个常量。system是const类型的特例，当查询的表只有一行的情况下，使用system。
+> 7. NULL：MySQL 在优化过程中分解语句，执行时甚至不用访问表或者索引，例如从一个索引列中选取最小值可以通过单独索引查找完成。
+>
+> ### possible_keys
+>
+> 指出 MySQL 能使用哪个索引在表中找到记录，查询涉及到的字段上若存在索引，在该索引将被列出，但不一定被使用。
+>
+> ### key
+>
+> key 列显示MySQL实际使用的索引。
+>
+> ### key_len
+>
+> 表示索引中使用的字节数，根据表定义计算而得，不损失精度的情况下，长度越短越好。
+>
+> ### ref
+>
+> 列与索引的比较，表示上述表连接匹配条件，即那些列或者常量被用于查找索引列上的值。
+>
+> ### rows
+>
+> 估算出结果集行数。表示MySQL根据表统计信息及索引选用情况，估算的找到所需记录所需读取的行数。
+>
+> ### filtered
+>
+> 使用explain extended时会出现这个列，5.7之后的版本默认就有这个字段，不需要使用explain extended了。这个字段表示存储引擎返回的数据在server层过滤后，剩下多少满足查询的记录数量的比例，注意是百分比，不是具体记录数。
+>
+> ### Extra
+>
+> 该列包含MySQL解决查询的详细信息
+

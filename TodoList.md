@@ -1,3 +1,5 @@
+[toc]
+
 ## 百科
 
 - [ ] 百科
@@ -12,15 +14,16 @@
 
 ## 数据库
 
-- [x] database/databases.md -->Oracle.md
 - [ ] database/databases.md -->事务、隔离、锁
 - [ ] database/databases.md -->...
 - [ ] JDBC/DBCP/Durid
+- [ ] redis的使用
 
 ## 前端
 
 - [ ] Web --> js_jQuery
 - [ ] Web -->html.md
+- [ ] CSS 定位和布局
 
 ## 网络
 
@@ -35,16 +38,22 @@
 - [ ] Git
 - [ ] Nginx
 - [ ] Apache
+- [ ] gradle
 
 ## JAVA
 
 - [ ] java/java.md
+- [ ] 多线程-锁机制
 
 ## JAVA 工具包
 
 - [ ] dom4j
 - [ ] fastjson
 - [ ] Quartz
+
+## 机器学习与算法
+
+- [ ] 判断字符串的相似性
 
 ## Spring
 

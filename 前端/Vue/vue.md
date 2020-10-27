@@ -8,25 +8,25 @@ Vue 是响应式的，HTML 是一个入口，数据与 DOM 建立关联，DOM �
 
 文本绑定："Mustache" 语法（双大括号）
 
-```js
+```html
 <span>Message: {{ msg }}</span>
 ```
 
 一次性文本插值：v-once 指令
 
-```js
+```html
 <span v-once>这个将不会改变: {{ msg }}</span>
 ```
 
 原始 HTML：v-html 指令
 
-```js
+```html
 <p>Using v-html directive: <span v-html="rawHtml"></span></p>
 ```
 
 绑定 attribute：v-bind 指令，`isButtonDisabled` 可以为字符串、`true` 、`null`、`undefined` 或 `false`
 
-```js
+```html
 <button v-bind:disabled="isButtonDisabled">Button</button>
 <!-- 缩写 -->
 <button :disabled="isButtonDisabled">Button</button>
@@ -34,7 +34,7 @@ Vue 是响应式的，HTML 是一个入口，数据与 DOM 建立关联，DOM �
 
 绑定attribute->class/style：v-bind 指令。针对 class ，表达式结果做了增强，类型除了字符串之外，还可以是对象或数组。style与class类似。
 
-```js
+```html
 <div v-bind:class="classObject"></div>
 <!-- class 存在与否将取决于数据 property isActive 的 truthiness-->
 <div v-bind:class="{ active: isActive }"></div>
@@ -48,7 +48,7 @@ Vue 是响应式的，HTML 是一个入口，数据与 DOM 建立关联，DOM �
 
 绑定动态参数：方括号括起来 JavaScript 作为指令参数。但空格和引号，放在 HTML attribute 名里是无效的。
 
-```js
+```html
 <a v-bind:[attributeName]="url"> ... </a>
 <!-- 缩写(2.6.0+) -->
 <a :[attributeName]="url"> ... </a>
@@ -61,6 +61,57 @@ JavaScript 表达式：
 {{ ok ? 'YES' : 'NO' }}
 {{ message.split('') }}
 <div v-bind:id="'list-'+id'"></div>
+```
+
+条件渲染：
+
+v-if 确保在切换的过程中，条件块内的事件监听器和子组件适当地被销毁和重建。
+
+v-if 是惰性的，直到第一次条件为真时，才会渲染条件块。
+
+```html
+<!-- if -->
+<h1 v-if="awesome">Vue is awesome!</h1>
+<!-- if-else -->
+<h1 v-if="awesome">Vue is awesome!</h1>
+<h1 v-else>Oh no ????</h1>
+<!-- if-else-if -->
+<div v-if="type === 'A'">
+  A
+</div>
+<div v-else-if="type === 'B'">
+  B
+</div>
+<div v-else-if="type === 'C'">
+  C
+</div>
+<div v-else>
+  Not A/B/C
+</div>
+<!-- Vue 会尽可能高效地渲染元素，通常会复用已有元素而不是从头开始渲染。那么在上面的代码中切换 loginType 将不会清除用户已经输入的内容。因为两个模板使用了相同的元素，<input> 不会被替换掉——仅仅是替换了它的 placeholder。 -->
+<div v-if="loginType === 'username'">
+	<label>Username</label>
+	<input placeholder="Enter your username">
+</div>
+<div v-else>
+	<label>Email</label>
+	<input placeholder="Enter your email address">
+</div>
+<!-- 添加一个具有唯一值的 key attribute 来确保两个元素是完全独立，不会被复用 -->
+<div v-if="loginType === 'username'">
+  <label>Username</label>
+  <input placeholder="Enter your username" key="username-input">
+</div>
+<div v-else>
+  <label>Email</label>
+  <input placeholder="Enter your email address" key="email-input">
+</div>
+```
+
+显示：v-show，切换元素 css 属性 display
+
+```html
+<h1 v-show="ok">Hello!</h1>
 ```
 
 ## 语法 - JS 部分

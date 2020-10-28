@@ -114,6 +114,31 @@ v-if 是惰性的，直到第一次条件为真时，才会渲染条件块。
 <h1 v-show="ok">Hello!</h1>
 ```
 
+列表渲染：
+
+```html
+<ul id="example-1">
+  <li v-for="item in items" :key="item.message">
+    {{ item.message }}
+  </li>
+</ul>
+<!-- 访问所有父作用域的 property。访问数组支持一个可选的第二个参数，即当前项的索引。访问对象支持第二个参数 property 名称，以及第三个参数 索引 index -->
+<ul id="example-2">
+  <li v-for="(item, index) in items">
+    {{ parentMessage }} - {{ index }} - {{ item.message }}
+  </li>
+</ul>
+<div v-for="(value, name) in object">
+  	{{ name }}: {{ value }}
+</div>
+<!-- 用 of 替代 in 作为分隔符 -->
+<div v-for="item of items"></div>
+```
+
+事件绑定：v-on
+
+输入绑定：v-model
+
 ## 语法 - JS 部分
 
 ```
@@ -226,7 +251,7 @@ var vm = new Vue({
 
 侦听适用于异步或开销较大的操作
 
-```
+```js
 var vm = new Vue({
   el: '#example',
   data: {

@@ -1,5 +1,29 @@
 [toc]
 
+## Springboot 配置
+
+spring.profiles.active：切换启动使用的配置
+
+[获取属性application中属性](https://www.cnblogs.com/Amywangqing/p/12896805.html)
+
+[Springboot yml获取系统环境变量的值](https://blog.csdn.net/tianyaleixiaowu/article/details/76019814)
+
+## Springboot 热部署
+
+yml:
+
+```
+spring.devtools.restart.enabled=true
+```
+
+pom:
+
+        <!-- spring-boot-devtools -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional> <!-- 表示依赖不会传递 -->
+        </dependency>
 ## Spring 应用监控Actuator
 
 Actuator是Spring Boot提供的对应用系统的监控和管理的集成功能，可以查看应用配置的详细信息，例如自动化配置信息、创建的Spring beans信息、系统环境变量的配置信以及Web请求的详细信息等。

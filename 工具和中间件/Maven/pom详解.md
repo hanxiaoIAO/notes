@@ -1,4 +1,16 @@
+## POM 中可以指定一下配置：
 
+- 项目依赖
+- 插件
+- 执行目标
+- 项目构建的配置文件
+- 项目版本
+- 项目开发者列表
+- 相关邮件列表信息
+
+## 详解
+
+```xml
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0http://maven.apache.org/maven-v4_0_0.xsd">
     <!--父项目的坐标。如果项目中没有规定某个元素的值，那么父项目中的对应值即为项目的默认值。 坐标包括group ID，artifact ID和 
@@ -667,3 +679,6 @@
     <!--以值替代名称，Properties可以在整个POM中使用，也可以作为触发条件（见settings.xml配置文件里activation元素的说明）。格式是<name>value</name>。 -->
     <properties />
 </project>
+
+```
+

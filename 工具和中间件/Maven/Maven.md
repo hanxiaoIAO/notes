@@ -119,7 +119,21 @@ Mvn help:describe -Dplugin=site -Dgoal=site -Ddetail
 Mvn dependency:tree
 ```
 
+### 配置第三方插件仓库
 
+```xml
+    <pluginRepositories>
+        <pluginRepository>
+			...
+        </pluginRepository>
+    </pluginRepositories>
+```
+
+### 插件默认 groupId 和 版本
+
+ Maven 官方插件的groupId都是 org.apache.maven.plugins。使用官方插件时可以不指定 groupId 。
+
+如果插件不属于核心插件范畴，Maven 会去检测所有仓库中的版本，最终会选择最新版本，而且这个最新版本不排除是快照版本。
 
 ## 私服创建
 

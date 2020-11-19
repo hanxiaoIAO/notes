@@ -78,6 +78,25 @@ Actuator监控分成两类：原生端点和用户自定义扩展端点，原生
 在使用Actuator时，不正确的使用或者一些不经意的疏忽，就会造成严重的信息泄露等安全隐患。在代码审计时如果是springboot项目并且遇到actuator依赖，则有必要对安全依赖及配置进行复查。也可作为一条规则添加到黑盒扫描器中进一步把控。
  安全的做法是一定要引入security依赖，打开安全限制并进行身份验证。同时设置单独的Actuator管理端口并配置不对外网开放。
 
+## SpringBoot 连接池
+
+SpringBoot 2.+ 版本默认使用 HikariPool 连接池
+
+SpringBoot 2.+ 版本使用 Druid 连接池做法：druid-spring-boot-starter中进行了默认配置
+
+```xml
+<druid-starter>
+	<dependency>
+	<groupId>com.alibaba</groupId>
+	<artifactId>druid-spring-boot-starter</artifactId>
+	<version>1.1.10</version>
+</dependency>
+```
+
+## SpringBoot 日志
+
+Spring Boot默认使用slf4j+LogBack日志系统。
+
 ## SpringBoot 问题汇总
 
 ### spring boot 配置文件配置项 数字特殊处理问题

@@ -65,6 +65,12 @@ SSH(Secure Shell)，由IETF网络小组制定，为建立在应用层基础上�
 >3. 仅为该类的成员变量提供getter方法，不提供setter方法，因为普通方法无法修改fina修饰的成员变量；
 >4. 如果有必要就重写Object类 的hashCode()和equals()方法，应该保证用equals()判断相同的两个对象其Hashcode值也是相等的。
 
+#### FatJar
+
+FatJar 又称作 uber-Jar，是包含所有依赖的 Jar 包。Jar 包中嵌入了除 java 虚拟机以外的所有依赖。FatJar 是一个 all-in-one Jar 包。FatJar 技术可以让那些用于最终发布的 Jar 便于部署和运行。
+
+[三种打包方式](https://www.jianshu.com/p/a7bd1f89f29f)
+
 ### CI/CD
 
 CI: 持续集成 Continuous Integration
@@ -72,3 +78,13 @@ CI: 持续集成 Continuous Integration
 CD: 持续交付 Continuous Delivery
 
 [详细](https://zhuanlan.zhihu.com/p/42286143)
+
+### AD(Active Directory)
+
+活动目录，微软Windows Server中，负责架构中大型网路环境的集中式目录管理服务（Directory Services）。它处理了在组织中的网路物件，物件可以是**计算机，用户，群组，组织单元（OU）**等等，只要是在Active Directory结构定义档（schema）中定义的物件，就可以储存在Active Directory资料档中，并利用Active Directory Service Interface来存取。
+
+[详细](https://www.cnblogs.com/IFire47/p/6672176.html)
+
+## 键盘 KeyCode
+
+[键盘 KeyCode](https://www.cnblogs.com/shyy/archive/2012/04/09/2453029.html)

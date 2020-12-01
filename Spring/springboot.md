@@ -8,6 +8,26 @@ spring.profiles.active：切换启动使用的配置
 
 [Springboot yml获取系统环境变量的值](https://blog.csdn.net/tianyaleixiaowu/article/details/76019814)
 
+```yaml
+#指定端口号
+server.port=8090
+#指定context path
+server.servlet.context-path=/test
+```
+
+### 配置文件位置
+
+application.properties一共有四个目录可以放置。
+
+1. 外置，在相对于应用程序运行目录的/congfig子目录里
+2. 外置，在应用程序运行的目录里
+3. 内置，在config包内
+4. 内置，在classpath根目录
+
+配置文件的优先级是 1 > 2 > 3 >4
+
+![https://images2018.cnblogs.com/blog/1345071/201804/1345071-20180411164135650-600936074.png](resources/配置路径1.png)![img](resources/配置路径2.png)
+
 ## Springboot 热部署
 
 yml:
@@ -96,6 +116,30 @@ SpringBoot 2.+ 版本使用 Druid 连接池做法：druid-spring-boot-starter中
 ## SpringBoot 日志
 
 Spring Boot默认使用slf4j+LogBack日志系统。
+
+## SpringBoot MVC 静态文件
+
+spring boot默认开启了静态文件的配置，任何放在/resources/static文件夹下的资源都是静态文件。引用静态文件时以/或者前缀不加任何定位符，都会去static文件夹下查找。
+
+注：thymeleaf模版默认会使用templatess作为视图文件下
+
+application.yml配置文件：
+
+1. 文件放在resources下
+
+   >```yml
+   >spring:
+   >  	resources:
+   >		static-locations: classpath:/templates/,classpath:/static/
+   >  ```
+   
+2. 文件放在任意路径下
+
+   >```yaml
+   >spring:
+   >  	resources:
+   >		static-locations: file:D:\gzzg\springboot-example08\templates\,file:D:\gzzg\springboot-example08\static
+   >  ```
 
 ## SpringBoot 问题汇总
 

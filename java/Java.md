@@ -10,16 +10,6 @@
 
 ​	Java被设计成允许应用程序可以运行在任意的平台，而不需要程序员为每一个平台单独重写或重新编译。Java虚拟机让这个变为可能，因为它知道底层硬件平台的指令长度和其他特性。
 
-### 2.JDK、JRE、JVM
-
-​	JDK(Java Development Kit)即为Java开发工具包，包含编写Java程序所必须的编译、运行等开发工具以及JRE。开发工具如：用于编译Java程序的javac命令、用于启动JVM运行java程序的java命令、用于生成文档的javadoc命令以及用于打包的jar命令等等。
-
-​	JRE(Java Runtime Environment)即为Java运行环境，提供运行java应用程序所必须的软件环境，包含Java虚拟机(JVM)和丰富的系统类库。系统类库即为java提前封装好的功能类，只需拿来直接使用即可，可以大大的提高开发效率。
-
-​	JVM(Java Virtual Mahines)即为Java虚拟机，提供字节码文件(.class)的运行环境支持。
-
-​	简单的说，就是JDK包含JRE包含JVM。
-
 ### 3.Java支持的数据类型有哪些？什么是自动拆装箱？
 
 ​	基本数据类型：
@@ -180,10 +170,6 @@
 
 ### 12.手写单例模式（饿汉模式和饱汉模式），工厂模式
 
-### 13.String和StringBuilder、StringBuffer的区别
-
-​	Java平台提供了两种类型的字符串：String和StringBuffer/StringBuilder,它们可以储存和操作字符串。其中String是只读字符串，也就意味着String引用的字符串内容是不能被改变的。而StringBuffer/StringBuilder类表示的字符串对象可以直接进行修改。StringBuilder是Java5中引入的，它和StringBuffer的方法完全相同，区别在于它是在单线程环境下使用的，因为它的所有方面都没有被synchronized修饰，因此它的效率也比StringBuffer要高。
-
 ### 14.Java集合框架是什么？说出一些集合框架的优点？
 
 ​	每种编程语言中都有集合，最初的Java版本包含几种集合类：Ventor、Stack、HashTable和Array。随着集合的广泛使用，Java1.2提出了囊括所有集合接口、实现和算法的集合框架。在保证线程安全的情况下使用泛型和并发集合类，Java已经经历了很久。它还包括在Java并发包中，阻塞接口以及它们的实现。集合框架的部分优点如下：
@@ -247,28 +233,6 @@
 ​	安全失败：在迭代的时候会去底层集合做一个拷贝，所以你在修改上层集合的时候是不会受到影响的，不会抛出ConcurrentModification异常。
 
 ​	在java.util.concurrent包下的全是安全失败的。
-
-### 22.Java中的HashMap的工作原理是什么？
-
-​	我们知道在java中最长用的两种结构是数组和模拟指针(引用)，几乎所有的数据结构都可以利用这两种组合来实现，HashMap也是如此。实际上HashMap是一个"链表散列"，如下是它数据结构：最左侧是一个数组，数组中的每一个元素都是一个链表，链表的每一个元素都是entry。
-
-​	HashMap是基于hashing的原理，我们使用put(key,value)存储对象到HashMap中，使用get(key)从HashMap中获取对象。当我们给put()方法传递键和值时，我们先对键调用hashCode()方法，返回的hashCode用于找到bucket位置来存储Entry对象。
-
-### 23.当两个对象的hashcode相同会发生什么？
-
-​	因为hashcode相同，所以他们的bucket位置相同，‘碰撞’会发生。因为HashMap使用链表存储对象，这个Entry(包含有键值对的Map.Entry对象)会存储在链表中。
-
-### 24.如果两个键的HashCode相同，你如何获取值对象？
-
-​	当我们调用get()方法，HashMap会使用键对象的hashcode找到bucket位置，然后调用keys.equals()方法区找到链表中正确的节点，最终找到要找的值对象。
-
-### 25.hashcode()和equals()方法有何重要性？
-
-​	HashMap使用Key对象的hashcode()和equals()方法去决定key-value对的索引。当我们试着从HashMap中获取值得时候，这些方法也会被用到。如果这些方法没有被正确地实现，在这种情况下，两个不同Key也许会产生相同的hashcode()和equals()输出，HashMap将会认为它们是相同的，然后覆盖它们，而非把它们存储到不同的地方。同样的，所有不允许存储重复数据的集合类都使用hashCode()和equals()去查找重复，所以正确实现它们非常重要。equals()和hashCode()的实现应该遵循以下规则：
-
-​	(1) 如果o1.equals(o2),那么o1.hashCode() == o2.hashCode()总是true的。
-
-​	(2)如果o1.hashCode() == o2.hashCode(),并不意味着o1.equals(o2)会是true。
 
 ### 26.HashMap和HashTable有什么区别？
 

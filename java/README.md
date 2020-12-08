@@ -8,7 +8,7 @@
 - [引用：等等与equals的区别](https://gitee.com/moxi159753/LearningNotes/blob/master/%E6%A0%A1%E6%8B%9B%E9%9D%A2%E8%AF%95/%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98/1_equals%E5%92%8C%E7%AD%89%E7%AD%89%E7%9A%84%E5%8C%BA%E5%88%AB/README.md) [等等、equals、hashCode](对象相等比较.md)
 - [Java 注解](java注解.md)
 - Java 反射
-- Java 泛型    Java泛型中的通配符T，E，K，V
+- [Java 泛型    Java泛型中的通配符T，E，K，V](Java泛型.md)
 - [Java 集合](集合.md)    ArrayList 扩容机制
 - [Java 线程    线程状态    优先级    ThreadLocal](多线程.md)    [锁    CAS    AQS](锁.md) 
   java.util.concurrent.locks.Condition 

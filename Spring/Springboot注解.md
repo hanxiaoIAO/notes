@@ -53,7 +53,9 @@ public class UserService {
 
 用来配置 spring bean 的作用域，它标识 bean 的作用域。 默认值是单例。
 
->singleton:单例模式,全局有且仅有一个实例 prototype:原型模式,每次获取Bean的时候会有一个新的实例
+>singleton:单例模式,全局有且仅有一个实例 
+>
+>prototype:原型模式,每次获取Bean的时候会有一个新的实例
 >
 >request:request表示该针对每一次HTTP请求都会产生一个新的bean，同时该bean仅在当前HTTP request内有效
 >

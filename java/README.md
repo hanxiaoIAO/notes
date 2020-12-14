@@ -17,7 +17,9 @@
 - [JDK 动态代理和 CGLIB 代理](动态代理.md)
 - [Java IO    Stream    序列化](JavaIO流.md)
 - 日期使用
-- Java8 新特性：Lambda 表达式    Optional
+- Java8 新特性：
+  [函数式编程 从匿名内部类到Lambda到方法引用](函数式接口.md)
+  [Optional](Java类.md)
 
 # JAVA Web
 

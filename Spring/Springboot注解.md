@@ -25,13 +25,128 @@ public class UserService {
 
 @Bean 和 @Component 功能相同，区别在于一个注解类，一个注解方法。
 
+### @Import
+
+@Import 用来装配第三方包中的类。
+
+@Import的用法：
+
+> 1. 直接填class数组方式
+>
+>    用法：
+>
+>    ```java
+>    @Import({ 类名.class , 类名.class... })
+>    @Component
+>    //@Component为了确保TestDemo被Spring扫描到，也可以使用其他做法
+>    //TestDemo 中如果有用@Bean装备的bean，也会同样被扫描到（对于较低的SpringBoot,用@Configuration注解的类才会扫描类中装配的bean）
+>    public class TestDemo {
+>    
+>    }
+>    ```
+>
+> 2. ImportSelector方式
+>
+>    用法：
+>
+>    ```java
+>    public class Myclass implements ImportSelector {
+>        @Override
+>        public String[] selectImports(AnnotationMetadata annotationMetadata) {
+>            return new String[]{"com.hanxiao.MyService"};//返回需装配的类名数组，可以返回空数组但是不能返回null。
+>        }
+>    }
+>    
+>    @Import(Myclass.class)
+>    @Component
+>    //Myclass不会被装配，MyClass中定义的类会被装配
+>    public class TestDemo {
+>    
+>    }
+>    ```
+>
+> 3. ImportBeanDefinitionRegistrar方式
+>
+>    用法:
+>
+>    ```java
+>    public class Myclass implements ImportBeanDefinitionRegistrar {
+>    //该实现方法默认为空
+>        @Override
+>        public void registerBeanDefinitions(AnnotationMetadata annotationMetadata, BeanDefinitionRegistry registry) {
+>          registry.registerBeanDefinition("MyService", new RootBeanDefinition(MyService.class));
+>        }
+>    }
+>    
+>    @Import(Myclass.class)
+>    @Component
+>    //Myclass不会被装配，MyClass中定义的类会被装配
+>    public class TestDemo {
+>    
+>    }
+>    ```
+>
+>    
+
+### @ComponentScan
+
+默认扫描注解的配置类所在的包。
+
+参数：
+
+> value： 用于指定包的路径，进行扫描
+>
+> basePackages： 用于指定包的路径，进行扫描。和 value 是一样的
+>
+> basePackageClasses：用于指定某个类的包的路径进行扫描
+>
+> nameGenerator：bean的名称的生成器
+>
+> scopeResolver：
+>
+> scopedProxy：
+>
+> resourcePattern：
+>
+> useDefaultFilters：是否开启对@Component，@Repository，@Service，@Controller的类进行检测
+>
+> includeFilters：包含的过滤条件，参数为 Filter注解 数组
+>
+> excludeFilters：排除的过滤条件，参数为 Filter注解 数组
+>
+> lazyInit：
+
+#### @Filter
+
+@ComponentScan 的参数 includeFilters 和 excludeFilters 的值类型
+
+@Filter 中参数 FilterType 的取值：
+
+> ANNOTATION：按照注解规则，过滤被指定注解标记的类；
+>
+> ASSIGNABLE_TYPE：按照给定的类型；
+>
+> ASPECTJ：按照ASPECTJ表达式；
+>
+> REGEX：按照正则表达式
+>
+> CUSTOM：自定义规则；
+
+### @ComponentScans
+
+ComponentScan 数组
+
 ### @Autowired
 
-用来装配 bean，可以写在方法上，也可以写在字段上。默认情况下必须要求依赖对象必须存在，如果允许 null 值，可以设置 required 属性。@Autowired(required=false)
+用来注入 bean，可以写在方法上，也可以写在字段上。默认情况下必须要求依赖对象必须存在，如果允许 null 值，可以设置 required 属性。@Autowired(required=false)
 
 ### @Qualifier
 
-当你创建多个具有相同类型的 bean 时，并且想要用一个属性只为它们其中的一个进行装配，在这种情况下，你可以使用 @Qualifier 注释和 @Autowired 注释通过指定哪一个真正的 bean 将会被装配来消除混乱。也可以直接使用 @Resource 。
+当你创建多个具有相同类型的 bean 时，并且想要用一个属性只为它们其中的一个进行注入，在这种情况下，你可以使用 @Qualifier 注释和 @Autowired 注释通过指定哪一个真正的 bean 将会被注入来消除混乱。也可以直接使用 @Resource 。
+
+### @Inject 和 @Named
+
+等同于 @Autowired 和 @Qualifier。区别在于这两个注解时 javax 提供的，JSR330 (Dependency Injection for Java)中的规范。
 
 ### @Resource
 
@@ -39,7 +154,7 @@ public class UserService {
 
 @Resource有两个属性是比较重要的，分是name和type，Spring将@Resource注解的name属性解析为bean的名字，而type属性则解析为bean的类型。
 
-@Resource装配顺序:
+@Resource注入顺序:
 
 > 如果同时指定了name和type，则从Spring上下文中找到唯一匹配的bean进行装配，找不到则抛出异常 
 >
@@ -47,7 +162,7 @@ public class UserService {
 >
 > 如果指定了type，则从上下文中找到类型匹配的唯一bean进行装配，找不到或者找到多个，都会抛出异常。
 >
-> 如果既没有指定name，又没有指定type，则自动按照byName方式进行装配；如果没有匹配，则按照类型进行匹配，如果匹配则自动装配。
+> 如果既没有指定name，又没有指定type，则自动按照byName方式进行装配；如果没有匹配，则按照类型进行匹配，如果匹配则自动注入。
 
 ### @Scope
 
@@ -66,6 +181,14 @@ public class UserService {
 ### @Required
 
 适用于bean属性setter方法。受影响的bean属性必须在配置时进行填充。
+
+### @DependsOn
+
+控制bean加载顺序
+
+### @Lazy
+
+延迟加载bean。容器启动不创建对象，第一次获取Bean的时候创建对象。
 
 ### @Configuration
 
@@ -197,6 +320,46 @@ public String testPathVariable(@PathVariable("id") Integer id){
 }
 ```
 
+## 定时任务
+
+### @EnableScheduling
+
+注解类，一般注解启动类或者配置类，用于开启计划任务。
+
+任一个地方有则认为开启，也就是说无法通过该注解控制某个特定类里的任务启动。
+
+### @Scheduled
+
+注解方法,该注解包含八个参数：
+
+> cron 表达式；
+>
+> zone 时区；
+>
+> fixedDelay 固定延迟时间-从上此次任务结束开始延迟；
+>
+> fixedDelayString 固定延迟时间-字符串形式；
+>
+> fixedRate 固定频率-间隔时间根据开始时间计算。同步状态下任务时间超过定义频率的在上一次任务结束后立即执行，异步状态下按照频率执行；
+>
+> fixedRateString 固定频率-字符串形式；
+>
+> initialDelay 第一次延迟多长时间执行；
+>
+> initialDelayString 第一次按时多长时间执行-字符串形式；
+
+同一个注解下 'cron', 'fixedDelay(String)' 或 'fixedRate(String)' 属性只能有一个。
+
+基于注解@Scheduled默认为单线程。
+
+### @EnableAsync
+
+使用@EnableAsync 开启多线程，注解启动类或者配置类，一般和 @EnableScheduling 放在一块。
+
+### @Async
+
+任务使用多线程。
+
 ## 缓存
 
 ### @Cacheable
@@ -238,6 +401,22 @@ PreDestroy 修饰的方法在destroy()方法执行之后执行
 ### @Repository
 
 用于标注数据访问组件，即DAO组件。
+
+## 事务
+
+### @EnableTransactionManagement
+
+开启事务。可不加，因为SpringBoot在TransactionAutoConfiguration类里为我们自动配置启用了@EnableTransactionManagement注解。
+
+### @Transactional
+
+事务。
+
+默认spring事务只在发生未被捕获的 RuntimeExcetpion/Error时才回滚，即被拦截的方法需显式抛出异常，并不能经任何处理，这样aop代理才能捕获到方法的异常，才能进行回滚，默认情况下aop只捕获runtimeexception/Errors的异常。可以通过参数指定回滚，例如@Transactional(rollbackFor=Exception.class) 。
+
+在 Spring 的 AOP 代理下，只有目标方法由外部调用，目标方法才由 Spring 生成的代理对象来管理，这会造成自调用问题。若同一类中的其他没有@Transactional 注解的方法内部调用有@Transactional 注解的方法，有@Transactional 注解的方法的事务被忽略，不会发生回滚。
+
+注：可以通过方法 TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();手动回滚事务，则不需要像上层抛出异常。
 
 ## 参考
 

@@ -1,9 +1,4 @@
-﻿2.SpringMVC在controller层捕获了service层的异常，事务还会回滚吗？
-默认spring事务只在发生未被捕获的 RuntimeExcetpion/Error时才回滚，即被拦截的方法需显式抛出异常，并不能经任何处理，这样aop代理才能捕获到方法的异常，才能进行回滚，默认情况下aop只捕获runtimeexception/Errors的异常。可以通过参数指定回滚，例如@Transactional(rollbackFor=Exception.class) 。
-在 Spring 的 AOP 代理下，只有目标方法由外部调用，目标方法才由 Spring 生成的代理对象来管理，这会造成自调用问题。若同一类中的其他没有@Transactional 注解的方法内部调用有@Transactional 注解的方法，有@Transactional 注解的方法的事务被忽略，不会发生回滚。
-注：可以通过方法 TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();手动回滚事务，则不需要像上层抛出异常。
-
-3.数据量大的List 怎么去重
+数据量大的List 怎么去重
 面试官的答案：利用 Set 不包含重复元素的特性进行查重。
 我的答案：利用java8的流。
 当时的答案是考虑大数据量，印象中java8流/并行流操作可以对集合的聚合以及大批量数据处理。后续进行了进一步了解，发现流的方式似乎更倾向于处理单个集合，且流的效率在不同配置的电脑上表现不同，某些情况下甚至弱于基本的迭代器。HashSet ，实际利用HashMap，HashMap 在对key 比较时会首先对 HashCode 进行比较，相对来说性能高，表现稳定，且这种处理方式灵活性好。比较推荐使用。

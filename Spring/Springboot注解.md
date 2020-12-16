@@ -418,6 +418,12 @@ PreDestroy 修饰的方法在destroy()方法执行之后执行
 
 注：可以通过方法 TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();手动回滚事务，则不需要像上层抛出异常。
 
+## 切面
+
+### @PointCut
+
+### @Aspect
+
 ## 参考
 
 [spring的注解及其解释]:(https://juejin.cn/post/6862571318877880333)

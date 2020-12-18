@@ -1,5 +1,17 @@
 [toc]
 
+## TODO
+
+xhr
+
+重定向 get 重定向和 post 重定向
+
+spring mvc DispatcherServlet
+
+shiro filterchainderfinitions
+
+AuthorizingRealm 调用
+
 ## 百科
 
 - [x] 百科

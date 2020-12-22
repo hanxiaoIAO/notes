@@ -2,8 +2,6 @@
 
 ## TODO
 
-xhr
-
 重定向 get 重定向和 post 重定向
 
 spring mvc DispatcherServlet

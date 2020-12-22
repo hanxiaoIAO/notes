@@ -32,8 +32,53 @@ xhr.open("get","example.php", false);
   用于指定发送请求的方式。不区分大小写。常用的值有：
 
   1. GET：用于常规请求。
+  2. POST：用于表单提交。
+  3. HEAD/OPTIONS/PUT：
+  4. CONNECT/TRACE/TRACK：出于安全风险的考虑，被禁止使用。
 
+- 参数2：URL。
 
+- 参数3：石头异步发送，布尔值，默认为 true，异步发送。
+
+- 参数4、5：如果 URL 受密码保护，可提供第四（用户）第五（密码）个参数。
+
+### 接收响应
+
+一个完整的 HTTP 响应由状态码、响应头集合和响应主体组成。收到响应后，可以通过 XHR 对象的属性和方法使用。
+
+响应中常用的四个属性：
+
+>状态码 - status：HTTP 状态码（数字形式）
+>
+>状态码 - statusText：HTTP 状态说明（文本形式）
+>
+>响应主体 - responseText：作为响应主体被返回的文本（文本形式）。无论内容类型是什么，响应主体的内容都会保存到responseText属性中
+>
+>响应主体 - responseXML：作为响应主体被返回的文本（XML 形式）。响应的内容类型是'text/xml'或'application/xml'
+
+### XHR对象的readyState属性
+
+异步响应可以使用 XHR 对象的 readyState 属性，该属性表示请求/响应过程中的当前活动阶段。这个属性可取值：
+
+> 0(UNSENT):未初始化。尚未调用open 方法
+>
+> 1(OPENED):启动。已经调用open()方法，但尚未调用send()方法
+>
+> 2(HEADERS_RECEIVED):发送。己经调用send()方法，且接收到头信息
+>
+> 3(LOADING):接收。已经接收到部分响应主体信息
+>
+> 4(DONE):完成。已经接收到全部响应数据，而且已经可以在客户端使用了
+
+理论来说，只要 readyState 属性变化，都会触发一次 readystatechange 事件。
+
+注： 必须在调用open()之前指定onreadystatechange 事件处理程序才能确保跨浏览器兼容性，否则将无法接收readyState属性为0和1的情况。
+
+### 超时 timeout 与 ontimeout()
+
+整数，标识多少毫秒之后，如果请求仍然没有得到结果，就会自动终止。默认等于 0 ，表示没有事件限制。
+
+如果请求超时，将触发 ontimeout 事件
 
 ## 参考
 

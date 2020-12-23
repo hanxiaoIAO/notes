@@ -64,6 +64,10 @@ shawn-common-utils：Java整理的基础工具类项目
 
 loserStarUtils：常用的工具集
 
+[TencentKona-8](https://github.com/Tencent/TencentKona-8)：腾讯的开源 JDK
+
+[dragonwell8](https://github.com/alibaba/dragonwell8)：阿里的开源 JDK
+
 ## 其他
 
 A-Programmers-Guide-to-English：英语学习指南

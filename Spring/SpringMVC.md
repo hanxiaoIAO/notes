@@ -43,3 +43,7 @@ DispatcherServlet extends FrameworkServlet
 
 
 
+WebApplicationContext
+
+DispatcherServletConfiguration -->WebMvcProperties-->DispatcherServlet
+

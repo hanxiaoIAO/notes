@@ -1,0 +1,1 @@
+D:\maven_repo\org\springframework\boot\spring-boot-autoconfigure\2.3.7.RELEASE\spring-boot-autoconfigure-2.3.7.RELEASE.jar$/META-INF/spring.factories

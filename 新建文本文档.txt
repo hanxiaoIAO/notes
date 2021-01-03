@@ -1,6 +1,0 @@
-数据量大的List 怎么去重
-面试官的答案：利用 Set 不包含重复元素的特性进行查重。
-我的答案：利用java8的流。
-当时的答案是考虑大数据量，印象中java8流/并行流操作可以对集合的聚合以及大批量数据处理。后续进行了进一步了解，发现流的方式似乎更倾向于处理单个集合，且流的效率在不同配置的电脑上表现不同，某些情况下甚至弱于基本的迭代器。HashSet ，实际利用HashMap，HashMap 在对key 比较时会首先对 HashCode 进行比较，相对来说性能高，表现稳定，且这种处理方式灵活性好。比较推荐使用。
-
-D:\maven_repo\org\springframework\boot\spring-boot-autoconfigure\2.3.7.RELEASE\spring-boot-autoconfigure-2.3.7.RELEASE.jar$/META-INF/spring.factories

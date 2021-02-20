@@ -200,6 +200,10 @@ Spring3.0+，@Configuration用于定义配置类，可替换xml配置文件。�
 2. @Configuration不可以是匿名类；
 3. 嵌套的configuration必须是静态类。
 
+### @Primary
+
+自动装配时当出现多个Bean候选者时，被注解为@Primary的Bean将作为首选者，否则将抛出异常 。
+
 ## web 相关
 
 ### @Controller

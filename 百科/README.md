@@ -94,3 +94,7 @@ CD: 持续交付 Continuous Delivery
 java语言开发，用于监控持续重复的工作，包括：持续的软件版本发布/测试项目，监控外部调用执行的工作。
 
 [中文官网](http://www.jenkins.org.cn/)
+
+## RPC
+
+RPC是远程过程调用（Remote Procedure Call）的缩写形式。
